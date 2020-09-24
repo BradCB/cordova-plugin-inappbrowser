@@ -171,6 +171,7 @@ public class InAppBrowser extends CordovaPlugin {
                 t = SELF;
             }
             final String target = t;
+            final HashMap<String, String> features = parseHeaders(args.optString(2));
             final HashMap<String, String> headers = parseHeaders(args.optString(3));
 
             LOG.d(LOG_TAG, "target = " + target);
