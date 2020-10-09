@@ -41,10 +41,10 @@
         self.disallowoverscroll = NO;
         self.hidenavigationbuttons = NO;
         self.closebuttoncolor = nil;
-        self.lefttoright = false;
+		      self.lefttoright = false;
         self.toolbarcolor = nil;
         self.toolbartranslucent = YES;
-        self.beforeload = @"";
+		      self.beforeload = @"";
     }
 
     return self;
@@ -85,6 +85,24 @@
     }
 
     return obj;
+}
+
++ (NSMutableURLRequest*)createRequest:(NSURL*)url headers:(NSString*)headers
+{
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
+	if (headers != nil) {
+		 NSArray* pairs = [headers componentsSeparatedByString:@","];
+		 for (NSString* pair in pairs) {
+			NSArray* keyvalue = [pair componentsSeparatedByString:@"="];
+
+			if ([keyvalue count] == 2) {
+				NSString* key = [[[[keyvalue objectAtIndex:0] stringByReplacingOccurrencesOfString:@"@e" withString:@"="] stringByReplacingOccurrencesOfString:@"@c" withString:@","] stringByReplacingOccurrencesOfString:@"@a" withString:@"@"];
+				NSString* value = [[[[keyvalue objectAtIndex:1] stringByReplacingOccurrencesOfString:@"@e" withString:@"="] stringByReplacingOccurrencesOfString:@"@c" withString:@","] stringByReplacingOccurrencesOfString:@"@a" withString:@"@"];
+				[request setValue:value forHTTPHeaderField:key];
+			}
+		}		
+	}
+	return request;
 }
 
 @end
